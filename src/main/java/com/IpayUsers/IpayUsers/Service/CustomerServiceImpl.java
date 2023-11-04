@@ -29,6 +29,8 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerStatusHistoryDao customerStatusHistoryDao;
 
 
+
+
     @Override
     public ResponseEntity<?> createCustomer(CustomerDTO customerDTO) {
         for (CustomerBankAccountDTO accountDTO : customerDTO.getBankAccounts()) {
@@ -93,6 +95,8 @@ public class CustomerServiceImpl implements CustomerService {
 
 
 
+
+
     @Override
     public ResponseEntity<?> updateCustomerStatus(int customerId, String newStatus, String remark) {
         Customer customer = customerDao.findById(customerId).orElse(null);
@@ -109,7 +113,6 @@ public class CustomerServiceImpl implements CustomerService {
         }
         else {
 
-            // Continue with the status update
             CustomerStatusHistory statusHistory = new CustomerStatusHistory();
             statusHistory.setPreviousStatus(customer.getStatus());
             statusHistory.setCurrentStatus(newStatus);
