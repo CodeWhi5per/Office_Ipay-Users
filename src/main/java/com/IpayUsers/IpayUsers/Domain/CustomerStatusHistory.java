@@ -6,16 +6,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Customer_Bank_Account {
+public class CustomerStatusHistory {
     @Id
-    private int accountNumber;
-    private String status;
-    private boolean isDefault;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+
+    private String previousStatus;
+    private String currentStatus;
+    private String remark;
+    private Date date;
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
