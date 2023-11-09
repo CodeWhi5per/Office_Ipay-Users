@@ -7,13 +7,15 @@ import com.IpayUsers.IpayUsers.Dto.CustomerDTO;
 
 import java.util.List;
 
+import java.util.List;
+
 public interface CustomerService {
-    String createCustomer(CustomerDTO customerDTO);
+    String createCustomer(CustomerDTO customerDTO) throws Exception;
 
-    List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(int customerId);
+    List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(int customerId) throws Exception;
 
-    String updateCustomerStatus(int customerId, String newStatus, String remark);
+    String updateCustomerStatus(int customerId, String newStatus, String remark) throws Exception;
 
-    List<Customer> getCustomerByByStatus(String status);
+    List<Customer> getCustomerByByStatus(String status) throws Exception;
 }
 

@@ -28,13 +28,13 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerStatusHistoryDao customerStatusHistoryDao;
 
     @Override
-    public String createCustomer(CustomerDTO customerDTO) {
+    public String createCustomer(CustomerDTO customerDTO) throws Exception {
         try {
             for (CustomerBankAccountDTO accountDTO : customerDTO.getBankAccounts()) {
                 int accountNumber = accountDTO.getAccountNumber();
                 Customer_Bank_Account existingAccount = customerBankAccountDao.findById(accountNumber).orElse(null);
                 if (existingAccount != null) {
-                    return "Account Number " + accountNumber + " is already taken by a Customer";
+                    throw new Exception("Account Number " + accountNumber + " is already taken by a Customer");
                 }
             }
 
@@ -63,17 +63,17 @@ public class CustomerServiceImpl implements CustomerService {
 
             return "Customer created successfully";
         } catch (Exception ex) {
-            return "Failed to create customer: " + ex.getMessage();
+            throw new Exception("Failed to create customer: " + ex.getMessage());
         }
     }
 
     @Override
-    public List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(int customerId) {
+    public List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(int customerId) throws Exception {
         try {
             Customer customer = customerDao.findById(customerId).orElse(null);
 
             if (customer == null) {
-                return Collections.emptyList();
+                throw new Exception("No customers with this ID");
             } else {
                 List<Customer_Bank_Account> activeBankAccounts = customer.getBankAccounts().stream()
                         .filter(account -> "Active".equals(account.getStatus()))
@@ -82,20 +82,20 @@ public class CustomerServiceImpl implements CustomerService {
                 return activeBankAccounts;
             }
         } catch (Exception ex) {
-            return null;
+            throw new Exception("Error: " + ex.getMessage());
         }
     }
 
     @Override
-    public String updateCustomerStatus(int customerId, String newStatus, String remark) {
+    public String updateCustomerStatus(int customerId, String newStatus, String remark) throws Exception {
         try {
             Customer customer = customerDao.findById(customerId).orElse(null);
 
             if (customer == null) {
-                return "No Customers in this ID";
+                throw new Exception("No customers with this ID");
             } else {
                 if (newStatus.equals(customer.getStatus())) {
-                    return "The Current Status Is the same as you entered!";
+                    throw new Exception("The Current Status Is the same as you entered!");
                 } else {
                     CustomerStatusHistory statusHistory = new CustomerStatusHistory();
                     statusHistory.setPreviousStatus(customer.getStatus());
@@ -113,12 +113,16 @@ public class CustomerServiceImpl implements CustomerService {
                 }
             }
         } catch (Exception ex) {
-            return "Error: " + ex.getMessage();
+            throw new Exception("Error: " + ex.getMessage());
         }
     }
 
     @Override
-    public List<Customer> getCustomerByByStatus(String status) {
-        return customerDao.findByStatus(status);
+    public List<Customer> getCustomerByByStatus(String status) throws Exception {
+        try {
+            return customerDao.findByStatus(status);
+        } catch (Exception ex) {
+            throw new Exception("Error: " + ex.getMessage());
+        }
     }
 }

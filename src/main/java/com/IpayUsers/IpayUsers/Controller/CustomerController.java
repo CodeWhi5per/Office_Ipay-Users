@@ -18,20 +18,20 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping
-    public List<Customer> getCustomerByStatus(@RequestParam String status) {
+    public List<Customer> getCustomerByStatus(@RequestParam String status) throws Exception {
         return customerService.getCustomerByByStatus(status);
     }
 
     @PostMapping("/saveCustomer")
-    public String createCustomer(@RequestBody CustomerDTO customerDTO) {
+    public String createCustomer(@RequestBody CustomerDTO customerDTO) throws Exception {
         return customerService.createCustomer(customerDTO);
     }
 
     @GetMapping("/{customerId}/activeBankAccounts")
-    public List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(@PathVariable int customerId) {
+    public List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(@PathVariable int customerId) throws Exception {
         List<Customer_Bank_Account> activeBankAccounts = customerService.getActiveBankAccountsByCustomerId(customerId);
         if (activeBankAccounts.isEmpty()) {
-
+            throw new Exception("No active accounts for this customer");
         }
         return activeBankAccounts;
     }
@@ -41,7 +41,7 @@ public class CustomerController {
             @PathVariable int customerId,
             @RequestParam String newStatus,
             @RequestParam String remark
-    ) {
+    ) throws Exception {
         return customerService.updateCustomerStatus(customerId, newStatus, remark);
     }
 }
