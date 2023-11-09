@@ -1,17 +1,19 @@
 package com.IpayUsers.IpayUsers.Service;
 
 import com.IpayUsers.IpayUsers.Domain.Customer;
+import com.IpayUsers.IpayUsers.Domain.Customer_Bank_Account;
 import com.IpayUsers.IpayUsers.Dto.CustomerDTO;
-import org.springframework.http.ResponseEntity;
+
 
 import java.util.List;
 
 public interface CustomerService {
-    ResponseEntity<?> createCustomer(CustomerDTO customerDTO);
+    String createCustomer(CustomerDTO customerDTO);
 
-    ResponseEntity<?> getActiveBankAccountsByCustomerId(int customerId);
+    List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(int customerId);
 
-    ResponseEntity<?> updateCustomerStatus(int customerId, String newStatus, String remark);
+    String updateCustomerStatus(int customerId, String newStatus, String remark);
 
-    List<Customer>getCustomerByByStatus(String status);
+    List<Customer> getCustomerByByStatus(String status);
 }
+
