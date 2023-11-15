@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class Customer_Bank_Account {
     @Id
-    private int accountNumber;
+    private long accountNumber;
     private String status;
     private boolean isDefault;
 

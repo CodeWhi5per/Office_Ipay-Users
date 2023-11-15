@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 public class CustomerBankAccountDTO {
-    private int accountNumber;
+    private long accountNumber;
     private String status;
     private boolean isDefault;
 }
