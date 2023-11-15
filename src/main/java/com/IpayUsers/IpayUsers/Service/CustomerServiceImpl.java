@@ -31,8 +31,8 @@ public class CustomerServiceImpl implements CustomerService {
     public String createCustomer(CustomerDTO customerDTO) throws Exception {
         try {
             for (CustomerBankAccountDTO accountDTO : customerDTO.getBankAccounts()) {
-                int accountNumber = accountDTO.getAccountNumber();
-                Customer_Bank_Account existingAccount = customerBankAccountDao.findById(accountNumber).orElse(null);
+                long accountNumber = accountDTO.getAccountNumber();
+                Customer_Bank_Account existingAccount = customerBankAccountDao.findById((int) accountNumber).orElse(null);
                 if (existingAccount != null) {
                     throw new Exception("Account Number " + accountNumber + " is already taken by a Customer");
                 }
