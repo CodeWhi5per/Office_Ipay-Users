@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.List;
 
 public interface CustomerService {
+
+    List<Customer> getAllCustomers() throws Exception;
     String createCustomer(CustomerDTO customerDTO) throws Exception;
 
     List<Customer_Bank_Account> getActiveBankAccountsByCustomerId(int customerId) throws Exception;

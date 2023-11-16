@@ -6,8 +6,11 @@ import com.IpayUsers.IpayUsers.Domain.Customer_Bank_Account;
 import com.IpayUsers.IpayUsers.Dto.CustomerDTO;
 import com.IpayUsers.IpayUsers.Service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -16,6 +19,19 @@ import java.util.List;
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
+
+
+    @GetMapping("/getAllCustomers")
+    public ResponseEntity<List<Customer>> getAllCustomers() {
+        try {
+            List<Customer> customers = customerService.getAllCustomers();
+            return ResponseEntity.ok(customers);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Collections.emptyList());
+        }
+    }
+
 
     @GetMapping
     public List<Customer> getCustomerByStatus(@RequestParam String status) throws Exception {

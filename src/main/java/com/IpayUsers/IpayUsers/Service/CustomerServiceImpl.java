@@ -27,6 +27,18 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerStatusHistoryDao customerStatusHistoryDao;
 
+
+
+    @Override
+    public List<Customer> getAllCustomers() throws Exception {
+        try {
+            return customerDao.findAll();
+        } catch (Exception ex) {
+            throw new Exception("Error fetching all customers: " + ex.getMessage());
+        }
+    }
+
+
     @Override
     public String createCustomer(CustomerDTO customerDTO) throws Exception {
         try {
